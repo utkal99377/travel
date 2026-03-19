@@ -162,7 +162,7 @@ const DESTINATIONS = [
     name: 'Manali',
     kicker: 'Core Base of Your Trip',
     description: 'Your main launch pad for mountain drives, cafe time, temples, and short scenic escapes around the valley.',
-    image: 'https://images.unsplash.com/photo-1542643671-bf1c8c1af7b9?auto=format&fit=crop&w=900&q=80',
+    image: 'assets/images/manali.jpg',
     guideId: 'guide-manali',
     tag: 'Core Base',
     facts: [
@@ -210,7 +210,7 @@ const DESTINATIONS = [
     name: 'Spiti Valley',
     kicker: 'Extreme Adventure Zone',
     description: 'A dramatic cold desert of monasteries, fossil villages, thin air, and some of the toughest road decisions on the trip.',
-    image: 'https://images.unsplash.com/photo-1522548937139-f6caad6c6ea2?auto=format&fit=crop&w=900&q=80',
+    image: 'assets/images/spiti.jpg',
     guideId: 'guide-spiti',
     tag: 'High Altitude',
     facts: [
@@ -251,7 +251,7 @@ const DESTINATIONS = [
     name: 'Solang Valley',
     kicker: 'Adventure Hub',
     description: 'This is the kinetic part of the itinerary with snow activities, open valley views, and easy access from Manali.',
-    image: 'https://images.unsplash.com/photo-1601610150501-5a2f9b7cec9c?auto=format&fit=crop&w=900&q=80',
+    image: 'assets/images/solang.jpg',
     guideId: 'guide-solang',
     tag: 'Adventure',
     facts: [
@@ -282,7 +282,7 @@ const DESTINATIONS = [
     name: 'Atal Tunnel',
     kicker: 'Engineering Marvel',
     description: 'The fast transition point that opens the route to Lahaul and changes how practical this day trip feels.',
-    image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80',
+    image: 'assets/images/atal.jpg',
     guideId: 'guide-atal',
     tag: 'Engineering Marvel',
     facts: [
@@ -313,7 +313,7 @@ const DESTINATIONS = [
     name: 'Sissu',
     kicker: 'Hidden Paradise',
     description: 'A calmer Lahaul stop that gives you the mountain-desert transition without the exhaustion of a full Spiti push.',
-    image: 'https://images.unsplash.com/photo-1602326191590-0e91a4d9d3f4?auto=format&fit=crop&w=900&q=80',
+    image: 'assets/images/sissu.jpg',
     guideId: 'guide-sissu',
     tag: 'Hidden Paradise',
     facts: [
@@ -344,7 +344,7 @@ const DESTINATIONS = [
     name: 'Rohtang Pass',
     kicker: 'Snow and Peaks',
     description: 'The classic snow stop of the region with big altitude, weather dependence, and a proper Himalayan feel.',
-    image: 'https://images.unsplash.com/photo-1564897302313-ffe1929a8aac?auto=format&fit=crop&w=900&q=80',
+    image: 'assets/images/rohtang.jpg',
     guideId: 'guide-rohtang',
     tag: 'Snow & Peaks',
     facts: [
@@ -375,7 +375,7 @@ const DESTINATIONS = [
     name: 'Kullu',
     kicker: 'Valley of Gods',
     description: 'A practical stop for rafting, markets, and temple visits before the Parvati Valley section begins.',
-    image: 'https://images.unsplash.com/photo-1542253088-ff4310b6d0b0?auto=format&fit=crop&w=900&q=80',
+    image: 'assets/images/kullu.jpg',
     guideId: 'guide-kullu',
     tag: 'Valley of Gods',
     facts: [
@@ -406,7 +406,7 @@ const DESTINATIONS = [
     name: 'Kasol',
     kicker: 'Mini Israel of India',
     description: 'A riverside backpacker base with cafe culture, easy walks, and quick access to rawer Parvati Valley villages.',
-    image: 'https://images.unsplash.com/photo-1560772148-4c5f77bb6654?auto=format&fit=crop&w=900&q=80',
+    image: 'assets/images/kasol.jpg',
     guideId: 'guide-kasol',
     tag: 'Hippie Culture',
     facts: [
@@ -444,7 +444,7 @@ const DESTINATIONS = [
     name: 'Manikaran',
     kicker: 'Spiritual and Natural Wonder',
     description: 'A sacred Parvati Valley stop where hot springs, langar, and temple-gurudwara energy all come together.',
-    image: 'https://images.unsplash.com/photo-1604710323509-1f276a96adc5?auto=format&fit=crop&w=900&q=80',
+    image: 'assets/images/manikaran.jpg',
     guideId: 'guide-manikaran',
     tag: 'Spiritual Stop',
     facts: [
@@ -1265,41 +1265,64 @@ function initAudio() {
 
 function startAmbient() {
   if (state.audioPlaying) return;
+
+  // Prefer playing the local audio asset if available.
+  const audioSrc = encodeURI('assets/audio/1290_Positive Chillout Background.wav');
+  const audioEl = state.audioElement || new Audio(audioSrc);
+  audioEl.loop = true;
+  audioEl.volume = 0.42;
+  state.audioElement = audioEl;
+
   const AudioContext = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContext) return;
-  state.audioCtx = new AudioContext();
+  if (AudioContext) {
+    // Use Web Audio for consistent volume control and smoother start/stop.
+    state.audioCtx = state.audioCtx || new AudioContext();
+    const source = state.audioCtx.createMediaElementSource(audioEl);
+    const gain = state.audioCtx.createGain();
+    gain.gain.value = 0.42;
 
-  const carrier = state.audioCtx.createOscillator();
-  const modulator = state.audioCtx.createOscillator();
-  const modGain = state.audioCtx.createGain();
-  const gain = state.audioCtx.createGain();
-  const filter = state.audioCtx.createBiquadFilter();
+    source.connect(gain);
+    gain.connect(state.audioCtx.destination);
 
-  carrier.type = 'sine';
-  carrier.frequency.value = 120;
+    state.ambientGain = gain;
+  }
 
-  modulator.type = 'triangle';
-  modulator.frequency.value = 0.1;
+  audioEl.play().catch(() => {
+    // Fallback: if playback is blocked, use a minimal oscillator tone.
+    if (!state.audioPlaying && AudioContext) {
+      const carrier = state.audioCtx.createOscillator();
+      const modulator = state.audioCtx.createOscillator();
+      const modGain = state.audioCtx.createGain();
+      const gain = state.audioCtx.createGain();
+      const filter = state.audioCtx.createBiquadFilter();
 
-  modGain.gain.value = 40;
+      carrier.type = 'sine';
+      carrier.frequency.value = 120;
 
-  gain.gain.value = 0.18;
-  filter.type = 'lowpass';
-  filter.frequency.value = 980;
-  filter.Q.value = 0.9;
+      modulator.type = 'triangle';
+      modulator.frequency.value = 0.1;
 
-  modulator.connect(modGain);
-  modGain.connect(carrier.frequency);
+      modGain.gain.value = 40;
 
-  carrier.connect(filter);
-  filter.connect(gain);
+      gain.gain.value = 0.18;
+      filter.type = 'lowpass';
+      filter.frequency.value = 980;
+      filter.Q.value = 0.9;
 
-  gain.connect(state.audioCtx.destination);
+      modulator.connect(modGain);
+      modGain.connect(carrier.frequency);
 
-  carrier.start();
-  modulator.start();
+      carrier.connect(filter);
+      filter.connect(gain);
+      gain.connect(state.audioCtx.destination);
 
-  state.ambientGain = gain;
+      carrier.start();
+      modulator.start();
+
+      state.ambientGain = gain;
+    }
+  });
+
   state.audioPlaying = true;
 
   ELEMENTS.audioIcon.innerHTML = `
@@ -1310,9 +1333,18 @@ function startAmbient() {
 }
 
 function stopAmbient() {
-  if (!state.audioPlaying || !state.audioCtx) return;
-  state.audioCtx.close();
-  state.audioCtx = null;
+  if (!state.audioPlaying) return;
+
+  if (state.audioElement) {
+    state.audioElement.pause();
+    state.audioElement.currentTime = 0;
+  }
+
+  if (state.audioCtx) {
+    state.audioCtx.close();
+    state.audioCtx = null;
+  }
+
   state.audioPlaying = false;
 
   ELEMENTS.audioIcon.innerHTML = `
