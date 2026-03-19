@@ -30,7 +30,7 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: rgba(5, 8, 15, 0.08);
+  background: transparent;
   pointer-events: none;
   z-index: -1;
 }
@@ -170,8 +170,8 @@ body::before {
   background-image: url('assets/images/background.jpg');
   background-size: cover;
   background-position: center;
-  filter: blur(6px) brightness(0.6);
-  opacity: 0.75;
+  filter: blur(6px);
+  opacity: 1;
 }
 
 /* Animated gradient for the route stroke */
