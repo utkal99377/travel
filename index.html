@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>MANALI - SPITI - KASOL TRAVEL GUIDE</title>
+
+    <!-- Tailwind (play CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              night: {
+                900: '#070a13',
+                800: '#0f1623',
+                700: '#131c2f',
+                600: '#1a233b'
+              },
+              glow: {
+                blue: '#51c2ff',
+                purple: '#af6cff',
+                cyan: '#16e3ff'
+              }
+            },
+            boxShadow: {
+              glass: '0 8px 30px rgba(0,0,0,0.45)',
+              neon: '0 0 18px rgba(81, 194, 255, 0.38), 0 0 48px rgba(175, 108, 255, 0.25)'
+            }
+          }
+        }
+      }
+    </script>
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1542643671-bf1c8c1af7b9?auto=format&fit=crop&w=900&q=80" />
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1522548937139-f6caad6c6ea2?auto=format&fit=crop&w=900&q=80" />
+
+    <meta name="theme-color" content="#070a13" />
+  </head>
+
+  <body class="bg-night-900 text-white overflow-x-hidden relative">
+    <!-- Scroll progress bar -->
+    <div id="scroll-progress" class="fixed top-0 left-0 h-1 w-0 bg-gradient-to-r from-glow-blue to-glow-purple z-50"></div>
+
+    <!-- Header -->
+    <header class="sticky top-0 left-0 right-0 z-50 backdrop-blur-xl bg-night-900/40 border-b border-white/10">
+      <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="#" class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-glow-purple to-glow-cyan flex items-center justify-center shadow-glow">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+              <path d="M3 12l2-2l7-5l7 5l2 2l-2 2l-7 5l-7-5z"/>
+              <path d="M3 12l2 2l7 5l7-5l2-2"/>
+              <path d="M12 22V12"/>
+            </svg>
+          </div>
+          <div>
+            <p class="text-xs text-white/70 tracking-widest">TRAVEL GUIDE</p>
+            <h1 class="text-sm font-semibold tracking-wide">Manali - Spiti - Kasol</h1>
+          </div>
+        </a>
+
+        <div class="flex items-center gap-3">
+          <button id="audio-toggle" class="w-10 h-10 rounded-2xl bg-night-800/70 backdrop-blur border border-white/10 shadow-sm flex items-center justify-center hover:bg-night-800/90 focus:outline-none" aria-label="Toggle ambient sound">
+            <svg id="audio-icon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-glow-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11 5l-6 6h-3v2h3l6 6V5z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.07 4.93a10 10 0 010 14.14" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.54 8.46a6 6 0 010 7.07" />
+            </svg>
+          </button>
+          <button id="menu-toggle" class="w-10 h-10 rounded-2xl bg-night-800/70 backdrop-blur border border-white/10 shadow-sm flex items-center justify-center hover:bg-night-800/90 focus:outline-none" aria-label="Open menu">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative">
+      <!-- Hero -->
+      <section id="hero" class="relative h-[calc(100vh-70px)] min-h-[560px] w-full overflow-hidden">
+        <canvas id="hero-canvas" class="absolute inset-0 w-full h-full"></canvas>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/70 pointer-events-none"></div>
+
+        <div class="relative max-w-5xl mx-auto px-4 h-full flex flex-col justify-end pb-20">
+          <div class="w-full backdrop-blur-xl bg-night-900/30 border border-white/10 rounded-3xl p-5 shadow-glow">
+            <p class="text-xs tracking-widest text-white/70 mb-2"> TRIP ITINERARY</p>
+            <h2 class="text-2xl sm:text-3xl font-semibold leading-tight">Manali - Spiti - Kasol Trip</h2>
+            <p class="mt-2 text-sm text-white/70">19 May - 28 May Travel Plan</p>
+            <div class="mt-6 flex flex-col sm:flex-row sm:items-center sm:gap-4 gap-3">
+              <button id="explore-journey" class="flex items-center justify-center gap-2 rounded-2xl px-6 py-3 bg-gradient-to-r from-glow-blue to-glow-purple shadow-glow text-sm font-semibold hover:scale-[1.02] transition-transform">
+                <span>Explore Journey</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </button>
+              <div class="text-xs text-white/60">
+                <p class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-glow-cyan animate-pulse"></span>Live route &amp; updates</p>
+                <p class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-glow-purple animate-pulse delay-150"></span>Snowfall &amp; 3D clouds</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Timeline -->
+      <section id="timeline" class="relative bg-white/5 py-16">
+        <div class="max-w-5xl mx-auto px-4">
+          <div class="mb-10 text-center">
+            <p class="text-sm uppercase tracking-widest text-white/60">Trip Timeline</p>
+            <h2 class="text-3xl sm:text-4xl font-semibold">10-Day Adventure Schedule</h2>
+            <p class="mt-3 text-white/60 max-w-2xl mx-auto">Swipe, scroll, and explore each day with glowing cards, animations, and mountain-themed micro-interactions.</p>
+          </div>
+
+          <div id="timeline-cards" class="space-y-6">
+            <!-- Cards injected via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Map -->
+      <section id="route-map" class="relative bg-white/5 py-16">
+        <div class="max-w-6xl mx-auto px-4">
+          <div class="mb-10 text-center">
+            <p class="text-sm uppercase tracking-widest text-white/60"> Route</p>
+            <h2 class="text-3xl sm:text-4xl font-semibold">Your Route From Jharsuguda to Manikaran</h2>
+            <p class="mt-3 text-white/60 max-w-2xl mx-auto">A glowing travel path with live progress. Follow the Delhi to Manali to Lahaul to Kasol flow as you scroll.</p>
+          </div>
+
+          <div class="relative rounded-3xl overflow-hidden border border-white/10 shadow-glow">
+            <!-- Background image for the route map -->
+            <div class="absolute inset-0 map-bg" aria-hidden="true"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-night-800 via-night-700 to-night-800 opacity-65"></div>
+            <div class="relative p-6">
+              <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-2xl bg-night-800/80 flex items-center justify-center border border-white/10 shadow-glow">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-glow-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-6a2 2 0 012-2h2a2 2 0 012 2v6m4-6h.01M7 17h.01" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="text-xs text-white/60 uppercase tracking-widest">Trip Progress</p>
+                    <p class="text-sm font-semibold">Live route animation</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button id="route-play" class="px-4 py-2 rounded-xl bg-white/10 border border-white/10 text-sm font-semibold hover:bg-white/15 transition">Play</button>
+                  <button id="route-reset" class="px-4 py-2 rounded-xl bg-white/10 border border-white/10 text-sm font-semibold hover:bg-white/15 transition">Reset</button>
+                </div>
+              </div>
+
+              <div class="relative overflow-hidden rounded-2xl" style="height: 360px;">
+                <svg id="route-svg" class="w-full h-full" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="routeGrad" x1="0" x2="1" y1="0" y2="1">
+                      <stop offset="0%" stop-color="#51c2ff" />
+                      <stop offset="25%" stop-color="#af6cff" />
+                      <stop offset="55%" stop-color="#ff6fd8" />
+                      <stop offset="80%" stop-color="#16e3ff" />
+                      <stop offset="100%" stop-color="#34ff8d" />
+                    </linearGradient>
+                    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                      <feGaussianBlur stdDeviation="16" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+
+                  <path id="route-path" d="M80,520 C180,420 260,460 340,380 C420,300 480,340 560,250 C640,160 720,190 800,120 C860,80 920,120 940,200" fill="none" stroke="url(#routeGrad)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)" />
+
+                  <g id="route-dot" filter="url(#glow)" transform="translate(80 520)">
+                    <circle class="dot-ring" cx="0" cy="0" r="18" fill="none" stroke="url(#routeGrad)" stroke-width="2" opacity="0.55" />
+                    <circle cx="0" cy="0" r="12" fill="#ffffff" />
+                    <text id="route-dot-icon" x="0" y="2" font-size="18" text-anchor="middle" alignment-baseline="middle">🚆</text>
+                  </g>
+
+                  <g id="route-icons" fill="#fff" opacity="0.9" font-size="24" text-anchor="middle" alignment-baseline="middle">
+                    <text x="80" y="520">🚆</text>
+                    <text x="220" y="455">🚌</text>
+                    <text x="340" y="380">🏍️</text>
+                    <text x="560" y="250">🚗</text>
+                  </g>
+
+                  <g id="route-stops" fill="#fff" opacity="0.85">
+                    <circle cx="80" cy="520" r="8" />
+                    <circle cx="220" cy="455" r="8" />
+                    <circle cx="340" cy="380" r="8" />
+                    <circle cx="560" cy="250" r="8" />
+                    <circle cx="800" cy="120" r="8" />
+                    <circle cx="940" cy="200" r="8" />
+                  </g>
+
+                  <g id="route-labels" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#ffffff" opacity="0.8">
+                    <text x="80" y="550">Jharsuguda</text>
+                    <text x="180" y="500">Delhi</text>
+                    <text x="300" y="350">Manali</text>
+                    <text x="500" y="220">Sissu / Spiti side</text>
+                    <text x="760" y="90">Kasol</text>
+                    <text x="860" y="245">Manikaran</text>
+                  </g>
+                </svg>
+              </div>
+
+              <div class="mt-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <p class="text-sm text-white/60">Route overview: Jharsuguda -> Delhi -> Manali -> Solang Valley -> Atal Tunnel -> Sissu -> Kasol -> Manikaran -> Jharsuguda</p>
+                <a
+                  href="https://www.google.com/maps/dir/Jharsuguda/Delhi/Manali/Solang+Valley/Atal+Tunnel/Sissu/Kasol/Manikaran/Jharsuguda"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 bg-white/10 border border-white/10 text-sm font-semibold hover:bg-white/15 transition"
+                >
+                  <span>Open Full Google Maps Route</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h10v10" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Destinations -->
+      <section id="destinations" class="relative bg-white/5 py-16">
+        <div class="max-w-6xl mx-auto px-4">
+          <div class="mb-10 text-center">
+            <p class="text-sm uppercase tracking-widest text-white/60">Destination Highlights</p>
+            <h2 class="text-3xl sm:text-4xl font-semibold">Must-Visit Stops</h2>
+            <p class="mt-3 text-white/60 max-w-2xl mx-auto">Tap a stop to jump into the full breakdown with history, hidden gems, must-visit places, and route reality checks.</p>
+          </div>
+
+          <div id="destination-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Destination cards injected via JS -->
+          </div>
+
+          <div class="mt-16">
+            <div class="mb-8 text-center">
+              <p class="text-sm uppercase tracking-widest text-white/60">Detailed Destination Guide</p>
+              <h3 class="text-2xl sm:text-3xl font-semibold">History, Hidden Gems, and Reality Checks</h3>
+              <p class="mt-3 text-white/60 max-w-2xl mx-auto">Use the guide below to plan what is actually worth your time in Manali, Spiti side, Solang, Kullu, Kasol, and Manikaran.</p>
+            </div>
+
+            <div id="guide-panels" class="space-y-4">
+              <!-- Detailed destination guides injected via JS -->
+            </div>
+          </div>
+
+          <div id="travel-toolkit" class="mt-16 grid grid-cols-1 xl:grid-cols-2 gap-6">
+            <!-- Route spotlights and travel tips injected via JS -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Nav -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 bg-night-900/60 backdrop-blur border-t border-white/10">
+      <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between">
+        <button class="nav-btn" data-target="#hero" aria-label="Home">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6m-6 0l-7 7h14l-7-7z" />
+          </svg>
+        </button>
+        <button class="nav-btn" data-target="#timeline" aria-label="Timeline">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 21h16M12 3v18" />
+          </svg>
+        </button>
+        <button class="nav-btn" data-target="#route-map" aria-label="Map">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 6l6-2 6 2v12l-6 2-6-2V6z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 6v12" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 4v12" />
+          </svg>
+        </button>
+        <button class="nav-btn" data-target="#destination-grid" aria-label="Destinations">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        <button class="nav-btn" data-target="#guide-panels" aria-label="Guide">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V5H6.5A2.5 2.5 0 0 0 4 7.5V19.5Z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 5v14" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Floating FAB -->
+    <button id="fab-top" class="fixed bottom-24 right-5 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-glow-blue to-glow-purple shadow-glow flex items-center justify-center text-white border border-white/10">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+      </svg>
+    </button>
+
+    <!-- Loader -->
+    <div id="loader" class="fixed inset-0 z-60 flex items-center justify-center bg-night-900">
+      <div class="flex flex-col items-center gap-4">
+        <div class="w-20 h-20 rounded-full border-4 border-white/15 border-t-glow-cyan animate-spin"></div>
+        <p class="text-sm text-white/70">Loading your high-altitude adventure...</p>
+      </div>
+    </div>
+
+    <!-- Page transition overlay -->
+    <div id="transition-overlay" class="fixed inset-0 pointer-events-none opacity-0 z-60"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r154/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/ScrollToPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/MotionPathPlugin.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
